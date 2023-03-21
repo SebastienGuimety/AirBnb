@@ -5,4 +5,6 @@ module com.example.airbnb {
 
     opens com.example.airbnb to javafx.fxml;
     exports com.example.airbnb;
+    exports com.example.airbnb.controller;
+    opens com.example.airbnb.controller to javafx.fxml;
 }

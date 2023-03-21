@@ -1,4 +1,4 @@
-package com.example.airbnb;
+package com.example.airbnb.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

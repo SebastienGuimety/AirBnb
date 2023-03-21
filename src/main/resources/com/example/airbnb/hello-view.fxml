@@ -15,7 +15,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Hyperlink?>
-<BorderPane fx:id="root" prefHeight="600" prefWidth="800" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16">
+<BorderPane fx:id="root" prefHeight="600" prefWidth="800" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="com.example.airbnb.controller.HelloController">
 <top>
     <HBox spacing="10">
         <Label text="Airbnb" style="-fx-font-size: 24px;"/>
