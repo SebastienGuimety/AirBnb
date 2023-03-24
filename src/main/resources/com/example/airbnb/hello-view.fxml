@@ -1,57 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-
-
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Hyperlink?>
-<BorderPane fx:id="root" prefHeight="600" prefWidth="800" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="com.example.airbnb.controller.HelloController">
-<top>
-    <HBox spacing="10">
-        <Label text="Airbnb" style="-fx-font-size: 24px;"/>
-        <TextField promptText="Search"/>
-        <Button text="Search"/>
-    </HBox>
-</top>
-<left>
-    <VBox spacing="10">
-        <Button text="Explore"/>
-        <Button text="Host"/>
-        <Button text="Messages"/>
-    </VBox>
-</left>
-<center>
-    <StackPane>
-        <ImageView>
+<?import javafx.scene.layout.HBox?>
 
-        </ImageView>
-    </StackPane>
-</center>
-<right>
-    <AnchorPane>
-        <Label text="Recommended for you" style="-fx-font-size: 18px;"/>
-        <VBox spacing="10" AnchorPane.bottomAnchor="0">
-            <Button text="Paris"/>
-            <Button text="New York"/>
-            <Button text="Tokyo"/>
-        </VBox>
-    </AnchorPane>
-</right>
-<bottom>
-    <HBox alignment="CENTER" spacing="10">
-        <Label text="© Airbnb 2023" style="-fx-font-size: 14px;"/>
-        <Hyperlink text="Privacy Policy" style="-fx-font-size: 14px;"/>
-        <Hyperlink text="Terms of Service" style="-fx-font-size: 14px;"/>
-    </HBox>
-</bottom>
-</BorderPane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1347.0" style="-fx-background-color: #EDF3F6;" stylesheets="@bootstrap3.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXButton layoutX="1217.0" layoutY="20.0" prefHeight="50.0" prefWidth="114.0" ripplerFill="#402626" text="Sign In" />
+      <HBox layoutX="243.0" layoutY="73.0" prefHeight="108.0" prefWidth="872.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <TextField alignment="CENTER" prefHeight="35.0" prefWidth="146.0" promptText="Destination" HBox.hgrow="NEVER">
+               <HBox.margin>
+                  <Insets left="40.0" top="60.0" />
+               </HBox.margin>
+            </TextField>
+            <TextField alignment="CENTER" promptText="Depart">
+               <HBox.margin>
+                  <Insets left="50.0" top="60.0" />
+               </HBox.margin>
+            </TextField>
+            <TextField alignment="CENTER" promptText="Retour">
+               <HBox.margin>
+                  <Insets left="50.0" top="60.0" />
+               </HBox.margin>
+            </TextField>
+            <TextField alignment="CENTER" promptText="Passagers">
+               <HBox.margin>
+                  <Insets left="50.0" top="60.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="TOP_RIGHT" layoutX="243.0" layoutY="181.0" prefHeight="66.0" prefWidth="872.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="54.0" prefWidth="92.0" style="-fx-background-color: #6E9082;" text="Rechercher">
+               <HBox.margin>
+                  <Insets right="80.0" top="12.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
