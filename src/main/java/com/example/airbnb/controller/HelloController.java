@@ -61,6 +61,8 @@ public class HelloController {
     List<Sejours> sejours = new ArrayList<>();
     ObservableList<Sejours> sejoursObservableList = FXCollections.observableArrayList();
 
+
+
     public void getAllSejours() throws IOException {
         String csvFilePath = "src/main/java/com/example/airbnb/views/sejours.csv";
         String currentPath = Paths.get("").toAbsolutePath().toString();
@@ -71,7 +73,7 @@ public class HelloController {
 
             // Récupérer les valeurs de chaque colonne en utilisant leur index
 
-            Sejours sej = new Sejours(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5) );
+            Sejours sej = new Sejours(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5), record.get(6), record.get(7), record.get(8) );
             //Label label = new Label(record.get(0) + " "+ record.get(1) + " "+5+ " "+record.get(3)+ " "+record.get(4)+" "+ 87);
             sejoursObservableList.add(sej);
 
@@ -84,8 +86,6 @@ public class HelloController {
     public void printAllSejours(List<Sejours> list ){
         for (Sejours flight : list) {
             // Create a VBox to hold the flight details
-
-
 
             HBox hboxville = new HBox( new Label("Ville : " + flight.getVille()));
             HBox hboxpays = new HBox(new Label("Pays : " + flight.getPays()));
@@ -126,52 +126,78 @@ public class HelloController {
                         // Par exemple, afficher des informations supplémentaires sur le voyage
                         Sejours voyage = (Sejours) vbox.getUserData();
 
-
-
                         System.out.println(voyage.getPrix());
                     });
                 }
             }
-
-
         }
-
     }
 
 
 
     public void initialize() throws IOException {
 
+        // Afficher tous les sejours dans la Hbox qui elle meme est dans un ScrollPane
         getAllSejours();
 
-        destination.textProperty().addListener((observable, oldValue, newValue) -> {
+        // Les 3  Listener sur le formulaire
 
+        // Ici  Destination
+        destination.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.length() >= 2) {
                 // Effectuer la recherche ici
-
-                // Filter flights based on search text
-                List<Sejours> filteredFlights = sejoursObservableList.stream()
-                        .filter(flight -> flight.getVille().contains(newValue)
-                                || flight.getHote().contains(newValue)
-                                || flight.getPays().contains(newValue)
-                                || flight.getPrix().contains(newValue)).toList();
-
-
-                // supprimer tous les voyages
-                hboxcentre.getChildren().clear();
-                // puis afficher les nouveaux avec la list bien filtrée
-                printAllSejours(filteredFlights);
-
+                updateVoyagesList();
             } else {
                 printAllSejours(sejoursObservableList);
+            }
+        });
 
+        // Ici Depart date
+        depart.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() >= 2) {
+                // Effectuer la recherche ici
+                updateVoyagesList();
+            } else {
+                printAllSejours(sejoursObservableList);
+            }
+        });
+
+        // Ici Fin date
+        retour.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() >= 2) {
+                // Effectuer la recherche ici
+                updateVoyagesList();
+            } else {
+                printAllSejours(sejoursObservableList);
             }
 
         });
 
         // print all the sejours in the first load of the view
         printAllSejours(sejoursObservableList);
+    }
 
+
+    // Fonction qui update la liste de voyage pour chaque champ dans le formulaire qui est changé
+    private void updateVoyagesList() {
+        String dep = depart.getText();
+        String ret = retour.getText();
+        String dest = destination.getText();
+
+        List<Sejours> filteredFlights = sejoursObservableList.stream()
+                .filter(flight -> flight.getVille().contains(dest)
+                        || flight.getHote().contains(dest)
+                        || flight.getPays().contains(dest)
+                        || flight.getPrix().contains(dest))
+                .filter(flight -> flight.getDatedebut().contains(dep))
+                .filter(flight -> flight.getDatefin().contains(ret))
+                .toList();
+
+
+        // supprimer tous les voyages
+        hboxcentre.getChildren().clear();
+        // puis afficher les nouveaux avec la list bien filtrée
+        printAllSejours(filteredFlights);
 
     }
 
