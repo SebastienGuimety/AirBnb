@@ -958,3 +958,14 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-background-color: #D8D8D8;
 	-fx-background-radius: 5px;
 }
+
+#panierpng:hover {
+	-fx-opacity: 0.8;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+#panierpng:target{
+	-fx-opacity: 0.2;
+
+}
+
+

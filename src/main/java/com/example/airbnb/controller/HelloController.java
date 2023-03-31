@@ -1,17 +1,26 @@
 package com.example.airbnb.controller;
 
+import com.example.airbnb.HelloApplication;
 import com.example.airbnb.models.Sejours;
+import com.example.airbnb.models.Session;
+import com.example.airbnb.models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -56,11 +65,69 @@ public class HelloController {
     private TextField destination, depart, retour;
 
     @FXML
-    private JFXButton submitForm;
+    private JFXButton submit;
+
+    @FXML
+    JFXButton connection;
+    @FXML
+    JFXButton deconnexion;
+
+    @FXML
+    ImageView panierpng;
+
+
+
+    private final Session session = Session.getInstance();
 
     List<Sejours> sejours = new ArrayList<>();
     ObservableList<Sejours> sejoursObservableList = FXCollections.observableArrayList();
 
+
+    public void updateHome() throws IOException {
+        // créer une nouvelle instance du contrôleur de la page home
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+
+        // initialiser une nouvelle scène avec la nouvelle instance de contrôleur
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+
+        // récupérer la fenêtre de la scène actuelle
+        Stage stage = (Stage) connection.getScene().getWindow();
+
+        // cacher la fenêtre actuelle et afficher la nouvelle scène
+        stage.setScene(scene);
+        stage.hide();
+        stage.show();
+
+    }
+
+    public void seConnecter() throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
+        //Parent loginRoot = fxmlLoader.load();
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+
+        // Récupérer le contrôleur de la page Login
+        LoginController loginController = fxmlLoader.getController();
+
+        // Passer la référence au contrôleur de la page Home
+        loginController.setHomeController(this);
+
+
+        Stage newStage = new Stage();
+        newStage.setWidth(300); // définir la largeur de la fenêtre
+        newStage.setHeight(300); // définir la hauteur de la fenêtre
+        newStage.setScene(scene);
+        newStage.show();
+        Alert alert = new Alert(null);
+    }
+
+    public void seDeconnecter() throws IOException {
+
+        session.logout();
+        updateHome();
+
+    }
 
 
     public void getAllSejours() throws IOException {
@@ -92,7 +159,7 @@ public class HelloController {
             HBox hboxprix = new HBox(new Label("Prix : " + flight.getPrix()));
             HBox hboxnb = new HBox(new Label("Nombres de passagers max : " + flight.getNbPassagers()));
             HBox hboxhote = new HBox(new Label("Hote : " + flight.getHote()));
-            HBox hboxavis = new HBox(new Label("avis : " + flight.getAvis()));
+            //HBox hboxavis = new HBox(new Label("avis : " + flight.getAvis()));
 
 
             VBox vboxDetails = new VBox();
@@ -100,7 +167,7 @@ public class HelloController {
             vboxDetails.setPadding(padding);
 
             // Add each HBox to the VBox
-            vboxDetails.getChildren().addAll(hboxville,hboxpays,hboxprix,hboxnb,hboxhote,hboxavis);
+            vboxDetails.getChildren().addAll(hboxville,hboxpays,hboxprix,hboxnb,hboxhote);
             vboxDetails.setUserData(flight);
             vboxDetails.setSpacing(10);
             vboxDetails.setMinWidth(300);
@@ -133,12 +200,26 @@ public class HelloController {
         }
     }
 
-
-
     public void initialize() throws IOException {
+
+        updateView();
+
+        Session session = Session.getInstance();
+        if (session.isLoggedIn()) {
+            User currentUser = session.getCurrentUser();
+            System.out.println("il est connecté le boug");
+            // afficher les informations de l'utilisateur
+        } else {
+            System.out.println("il est pas du tout connecté le boug");
+            // rediriger l'utilisateur vers la page de connexion
+        }
+
 
         // Afficher tous les sejours dans la Hbox qui elle meme est dans un ScrollPane
         getAllSejours();
+
+
+
 
         // Les 3  Listener sur le formulaire
 
@@ -210,5 +291,24 @@ public class HelloController {
 
         }
 
+    }
+
+    private void updateView() {
+        if (session != null && session.isLoggedIn()) {
+            // Si l'utilisateur est connecté, on affiche les éléments liés à la connexion
+            connection.setVisible(false);
+            deconnexion.setVisible(true);
+
+        } else {
+            // Si l'utilisateur n'est pas connecté, on affiche les éléments liés à la déconnexion
+            connection.setVisible(true);
+            deconnexion.setVisible(false);
+
+        }
+    }
+
+    @FXML
+    void panier(MouseEvent event) {
+        System.out.println("ouais panier");
     }
 }

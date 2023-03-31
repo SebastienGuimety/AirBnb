@@ -6,12 +6,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1347.0" style="-fx-background-color: #EDF3F6;" stylesheets="@bootstrap3.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.airbnb.controller.HelloController">
    <children>
-      <JFXButton layoutX="1217.0" layoutY="20.0" prefHeight="50.0" prefWidth="114.0" ripplerFill="#402626" text="Sign In" />
+      <JFXButton fx:id="connection" layoutX="1217.0" layoutY="20.0" onAction="#seConnecter" prefHeight="50.0" prefWidth="114.0" ripplerFill="#402626" text="Sign In" />
       <HBox layoutX="243.0" layoutY="73.0" prefHeight="108.0" prefWidth="872.0" style="-fx-background-color: #FFFFFF;">
          <children>
             <TextField fx:id="destination" alignment="CENTER" prefHeight="35.0" prefWidth="146.0" promptText="Destination" HBox.hgrow="NEVER">
@@ -55,5 +57,11 @@
             <HBox fx:id="hboxcentre" prefHeight="346.0" prefWidth="888.0" />
          </content>
       </ScrollPane>
+      <ImageView id="panierpng" fx:id="panierpng" fitHeight="37.0" fitWidth="54.0" layoutX="29.0" layoutY="32.0" onMouseClicked="#panier" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@paniers.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="deconnexion" layoutX="1217.0" layoutY="20.0" onAction="#seDeconnecter" prefHeight="50.0" prefWidth="114.0" ripplerFill="#402626" text="Sign Out" />
    </children>
 </AnchorPane>
