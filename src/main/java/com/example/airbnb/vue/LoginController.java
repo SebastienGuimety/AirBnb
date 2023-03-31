@@ -45,12 +45,15 @@ public class LoginController {
 			String prenom = record.get(1);
 			String login_file = record.get(2);
 			String password_file = record.get(3);
+			String role = record.get(4);
 			System.out.println("file login is " + login_file);
 			if (login_file.equals(login.getText())) {
 				trouve = true;
 				if (password_file.equals(password.getText())) {
-
+					
+					
 					erreur.setText("User trouvé");
+					erreur.setText("Votre Role est "+role);
 					
 				} else {
 					erreur.setText("Mot de passe incorrect!!");

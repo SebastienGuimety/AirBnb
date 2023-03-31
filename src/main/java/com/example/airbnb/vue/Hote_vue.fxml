@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="725.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.airbnb.controller.HoteController">
+	<stylesheets>
+		<URL value="@tableview.css" />
+	</stylesheets>
+	<children>
+		<TableView fx:id="studentsTable" layoutX="10.0" layoutY="179.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" prefHeight="265.0" prefWidth="702.0">
+			<columns>
+				<TableColumn fx:id="depart" maxWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Depart" />
+				<TableColumn fx:id="retour" maxWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Retour" />
+				<TableColumn fx:id="ville" maxWidth="-1.0" prefWidth="72.0" style="-fx-alignment: center;" text="Ville" />
+				<TableColumn fx:id="nbPassagers" maxWidth="1.7976931348623157E308" style="-fx-alignment: center;" text="Nb Passagers" />
+				<TableColumn fx:id="prix" maxWidth="1.7976931348623157E308" prefWidth="0.0" style="-fx-alignment: center;" text="Prix" />
+				<TableColumn fx:id="editCol" maxWidth="100.0" minWidth="50.0" prefWidth="100.0" style="-fx-alignment: center;" text="Action" />
+				<TableColumn fx:id="status" maxWidth="-Infinity" minWidth="190.0" prefWidth="190.0" style="-fx-alignment: center;" text="Status" />
+				
+			</columns>
+		</TableView>
+		<Pane layoutY="59.0" prefHeight="3.0" prefWidth="200.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+		<Text layoutX="14.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Demandes de résérvation" wrappingWidth="488.13671875">
+			<font>
+				<Font name="Bauhaus 93" size="32.0" />
+			</font>
+		</Text>
+	</children>
+</AnchorPane>

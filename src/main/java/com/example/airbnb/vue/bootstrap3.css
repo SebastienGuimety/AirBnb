@@ -928,3 +928,33 @@ VBox > .split-menu-button.last > .arrow-button {
 .slider:vertical .track {
 	-fx-pref-width: 5;
 }
+
+/*******************************************************************************
+ *                                                                             *
+ * Vbox for each location                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+.vbox-frame {
+	-fx-border-color: black;
+	-fx-border-width: 2px;
+	-fx-border-radius: 5px;
+	-fx-padding: 5px;
+}
+
+.selected {
+	-fx-border-color: #6E9082;
+	-fx-border-width: 2px;
+	-fx-border-radius: 5px;
+	-fx-background-color: #E5E5E5;
+	-fx-background-radius: 5px;
+	-fx-transition: border-color 0.3s ease-in-out;
+}
+
+.selected:hover {
+	-fx-border-color: #6E9082;
+	-fx-border-width: 2px;
+	-fx-border-radius: 5px;
+	-fx-background-color: #D8D8D8;
+	-fx-background-radius: 5px;
+}

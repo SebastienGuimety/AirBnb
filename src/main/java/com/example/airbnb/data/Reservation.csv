@@ -1,0 +1,5 @@
+Ville,Prix,Sejour,Hote,nbPassagers,datedebut,datefin,status,id
+Barcelone,200,1,2,5,12/07/2023,15/07/2023,En cours de validation,1
+Avignon,100,2,1,5,12/07/2023,15/07/2023,En cours de validation,2
+Marseille,300,3,3,5,12/07/2023,15/07/2023,Accepté,3
+Marrakesh,400,4,4,5,12/07/2023,15/07/2023,Refusé,4

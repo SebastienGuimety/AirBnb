@@ -1,0 +1,12 @@
+Ville,Pays,Prix,Hote,nbPassagers,avis,datedebut,datefin,reserver
+
+Barcelone,Espagne,100,Lucas,5,4,04/10,10/10,0
+Paris,France,600,Elliott,10,4,04/06,10/06,0
+Metz,France,646,Alex,10,4,24/12,28/12,0
+Orange,France,3000,pilou,10,4,04/10,10/10,0
+Avignon,France,300,Seb,7,1,10/01,18/01,0
+Lille,France,300,Seb,2,1,05/06,29/07,0
+
+
+
+
