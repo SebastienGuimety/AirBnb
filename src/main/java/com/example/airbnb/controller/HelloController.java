@@ -197,7 +197,7 @@ public class HelloController {
                         Scene scene = null;
 
                         try {
-                            scene = new Scene(fxmlLoader.load(), 320, 240);
+                            scene = new Scene(fxmlLoader.load(), 400, 400);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -206,14 +206,16 @@ public class HelloController {
 
                         SejourController sejourController = fxmlLoader.getController();
                         // Passer la référence au contrôleur de la page Home
-                        sejourController.setSejour(voyage);
-
-
+                        try {
+                            sejourController.setSejour(voyage);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
 
 
                         Stage newStage = new Stage();
-                        newStage.setWidth(300); // définir la largeur de la fenêtre
-                        newStage.setHeight(300); // définir la hauteur de la fenêtre
+                        newStage.setWidth(400); // définir la largeur de la fenêtre
+                        newStage.setHeight(450); // définir la hauteur de la fenêtre
                         newStage.setScene(scene);
                         newStage.show();
                         //Alert alert = new Alert(null);
