@@ -2,15 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.airbnb.controller.LoginController">
-    <Label layoutX="68.0" layoutY="14.0" text="Nom d'utilisateur" />
-    <TextField fx:id="login" layoutX="68.0" layoutY="47.0" prefHeight="25.0" prefWidth="184.0" />
-    <Label layoutX="68.0" layoutY="83.0" text="Mot de passe" />
-    <PasswordField fx:id="password" layoutX="68.0" layoutY="112.0" prefHeight="25.0" prefWidth="184.0" />
-    <Button fx:id="connecter" layoutX="104.0" layoutY="174.0" mnemonicParsing="false" onAction="#connexion" text="Se connecter" />
-    <Label fx:id="erreur" layoutX="68.0" layoutY="145.0" prefHeight="17.0" prefWidth="184.0" textFill="#dd4a2d" />
+<AnchorPane prefHeight="253.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.airbnb.controller.SejourController">
+   <VBox fx:id="vboxcentre" layoutX="1.0" prefHeight="170.0" prefWidth="361.0" />
+   <Button fx:id="quitter" layoutX="192.0" layoutY="222.0" mnemonicParsing="false" onAction="#quit" text="Quitter" />
+   <Label fx:id="erreur" layoutX="1.0" layoutY="177.0" prefHeight="41.0" prefWidth="361.0" textFill="#dd4a2d" />
+   <Button fx:id="reserver" layoutX="115.0" layoutY="222.0" mnemonicParsing="false" onAction="#reserver" text="Reserver" />
+
 </AnchorPane>

@@ -3,6 +3,7 @@ module com.example.airbnb {
     requires javafx.fxml;
     requires commons.csv;
     requires com.jfoenix;
+    requires com.opencsv;
 
 
     opens com.example.airbnb to javafx.fxml;

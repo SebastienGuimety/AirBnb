@@ -36,8 +36,6 @@ public class LoginController {
     @FXML
     Label erreur;
 
-
-
     private HelloController helloController;
 
     // Méthode pour passer la référence au contrôleur de la page Home
@@ -76,8 +74,6 @@ public class LoginController {
                     Session.getInstance().login(user);
 
                     //Thread.sleep(5000);
-
-
 
                     final Node source = (Node) e.getSource();
                     // Récupère le Stage de la scène actuelle

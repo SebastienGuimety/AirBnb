@@ -76,12 +76,10 @@ public class HelloController {
     ImageView panierpng;
 
 
-
     private final Session session = Session.getInstance();
 
     List<Sejours> sejours = new ArrayList<>();
     ObservableList<Sejours> sejoursObservableList = FXCollections.observableArrayList();
-
 
     public void updateHome() throws IOException {
         // créer une nouvelle instance du contrôleur de la page home
@@ -140,7 +138,7 @@ public class HelloController {
 
             // Récupérer les valeurs de chaque colonne en utilisant leur index
 
-            Sejours sej = new Sejours(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5), record.get(6), record.get(7), record.get(8) );
+            Sejours sej = new Sejours(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5), record.get(6), record.get(7), record.get(8),record.get(9), record.get(10) );
             //Label label = new Label(record.get(0) + " "+ record.get(1) + " "+5+ " "+record.get(3)+ " "+record.get(4)+" "+ 87);
             sejoursObservableList.add(sej);
 
@@ -151,16 +149,15 @@ public class HelloController {
     }
 
     public void printAllSejours(List<Sejours> list ){
-        for (Sejours flight : list) {
+        for (Sejours sejour : list) {
             // Create a VBox to hold the flight details
 
-            HBox hboxville = new HBox( new Label("Ville : " + flight.getVille()));
-            HBox hboxpays = new HBox(new Label("Pays : " + flight.getPays()));
-            HBox hboxprix = new HBox(new Label("Prix : " + flight.getPrix()));
-            HBox hboxnb = new HBox(new Label("Nombres de passagers max : " + flight.getNbPassagers()));
-            HBox hboxhote = new HBox(new Label("Hote : " + flight.getHote()));
+            HBox hboxville = new HBox( new Label("Ville : " + sejour.getVille()));
+            HBox hboxpays = new HBox(new Label("Pays : " + sejour.getPays()));
+            HBox hboxprix = new HBox(new Label("Prix : " + sejour.getPrix()));
+            HBox hboxnb = new HBox(new Label("Nombres de passagers max : " + sejour.getNbPassagers()));
+            HBox hboxhote = new HBox(new Label("Hote : " + sejour.getNomHote()));
             //HBox hboxavis = new HBox(new Label("avis : " + flight.getAvis()));
-
 
             VBox vboxDetails = new VBox();
             Insets padding = new Insets(50, 0, 0, 0);
@@ -168,7 +165,7 @@ public class HelloController {
 
             // Add each HBox to the VBox
             vboxDetails.getChildren().addAll(hboxville,hboxpays,hboxprix,hboxnb,hboxhote);
-            vboxDetails.setUserData(flight);
+            vboxDetails.setUserData(sejour);
             vboxDetails.setSpacing(10);
             vboxDetails.setMinWidth(300);
 
@@ -189,9 +186,43 @@ public class HelloController {
                         }
 
 
+                        Sejours voyage = (Sejours) vbox.getUserData();
+
+                        //Sejours voy = new Sejours(sejour.getVille(), sejour.getPays(), sejour.getPrix(), sejour.getHote(), sejour.getNbPassagers(), sejour.getAvis(), sejour.getDatedebut(), sejour.getDatefin(), sejour.getReserver());
+
+
+                        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("sejour.fxml"));
+
+                        //Parent loginRoot = fxmlLoader.load();
+                        Scene scene = null;
+
+                        try {
+                            scene = new Scene(fxmlLoader.load(), 320, 240);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
+
+                        SejourController sejourController = fxmlLoader.getController();
+                        // Passer la référence au contrôleur de la page Home
+                        sejourController.setSejour(voyage);
+
+
+
+
+                        Stage newStage = new Stage();
+                        newStage.setWidth(300); // définir la largeur de la fenêtre
+                        newStage.setHeight(300); // définir la hauteur de la fenêtre
+                        newStage.setScene(scene);
+                        newStage.show();
+                        //Alert alert = new Alert(null);
+
+
+
                         // Code à exécuter lorsque la VBox est cliquée
                         // Par exemple, afficher des informations supplémentaires sur le voyage
-                        Sejours voyage = (Sejours) vbox.getUserData();
+
 
                         System.out.println(voyage.getPrix());
                     });
@@ -217,9 +248,6 @@ public class HelloController {
 
         // Afficher tous les sejours dans la Hbox qui elle meme est dans un ScrollPane
         getAllSejours();
-
-
-
 
         // Les 3  Listener sur le formulaire
 
@@ -267,7 +295,7 @@ public class HelloController {
 
         List<Sejours> filteredFlights = sejoursObservableList.stream()
                 .filter(flight -> flight.getVille().contains(dest)
-                        || flight.getHote().contains(dest)
+                        || flight.getNomHote().contains(dest)
                         || flight.getPays().contains(dest)
                         || flight.getPrix().contains(dest))
                 .filter(flight -> flight.getDatedebut().contains(dep))
@@ -281,7 +309,6 @@ public class HelloController {
         printAllSejours(filteredFlights);
 
     }
-
 
     public void submitForm(ActionEvent actionEvent) {
 
@@ -308,7 +335,24 @@ public class HelloController {
     }
 
     @FXML
-    void panier(MouseEvent event) {
-        System.out.println("ouais panier");
+    void panier(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("panier.fxml"));
+        //Parent loginRoot = fxmlLoader.load();
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+
+        // Récupérer le contrôleur de la page Login
+        //LoginController loginController = fxmlLoader.getController();
+
+        // Passer la référence au contrôleur de la page Home
+        //loginController.setHomeController(this);
+
+
+        Stage newStage = new Stage();
+        newStage.setWidth(650); // définir la largeur de la fenêtre
+        newStage.setHeight(530); // définir la hauteur de la fenêtre
+        newStage.setScene(scene);
+        //newStage.setMaximized(true);
+        newStage.show();
+        Alert alert = new Alert(null);
     }
 }

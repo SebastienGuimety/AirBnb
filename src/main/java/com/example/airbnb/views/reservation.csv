@@ -1,0 +1,6 @@
+Ville,Pays,Prix,Hote,Client,nbPassagers,datedebut,datefin,status,id
+Barcelone,Espagne,200,Lucas,Seb,5,12/07/2023,15/07/2023,Attente,1
+Barcelone,Espagne,100,1,5,5,04/10,10/10,Attente,1
+
+Paris,France,600,2,5,10,04/06,10/06,Attente,2
+Barcelone,Espagne,100,1,5,5,04/10,10/10,Attente,1
