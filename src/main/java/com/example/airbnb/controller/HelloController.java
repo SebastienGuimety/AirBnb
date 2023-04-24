@@ -1,8 +1,12 @@
 package com.example.airbnb.controller;
+import com.example.airbnb.vue.LoginController;
 
 import com.example.airbnb.HelloApplication;
 import com.example.airbnb.models.Sejour;
 import com.example.airbnb.models.Sejours;
+import com.example.airbnb.models.Session;
+import com.example.airbnb.models.User;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,9 +15,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -66,20 +73,55 @@ public class HelloController {
 
 	@FXML
 	private JFXButton submitForm;
+	@FXML
+	JFXButton connection;
+	@FXML
+	JFXButton deconnexion;
+
+	@FXML
+	ImageView panierpng;
+
+	
+
+	public void updateHome() throws IOException {
+		// créer une nouvelle instance du contrôleur de la page home
+		FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vue/hello-view.fxml"));
+		// initialiser une nouvelle scène avec la nouvelle instance de contrôleur
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root);
+
+		// récupérer la fenêtre de la scène actuelle
+		Stage stage = (Stage) connection.getScene().getWindow();
+
+		// cacher la fenêtre actuelle et afficher la nouvelle scène
+		stage.setScene(scene);
+		stage.hide();
+		stage.show();
+
+	}
 
 	public void seConnecter() throws IOException {
+		
+		
+
 		Stage newStage = new Stage();
 		FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vue/login.fxml"));
 		Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-		newStage.setWidth(800); // définir la largeur de la fenêtre
-		newStage.setHeight(600); // définir la hauteur de la fenêtre
+		LoginController loginController = fxmlLoader.getController();
+
+        // Passer la référence au contrôleur de la page Home
+        loginController.setHomeController(this);
+		newStage.setWidth(350); // définir la largeur de la fenêtre
+		newStage.setHeight(300); // définir la hauteur de la fenêtre
 		newStage.setScene(scene);
 		newStage.show();
 		Alert alert = new Alert(null);
 	}
 
+	private final Session session = Session.getInstance();
+
 	List<Sejours> sejours = new ArrayList<>();
-	ObservableList<Sejours> sejoursObservableList = FXCollections.observableArrayList  ();
+	ObservableList<Sejours> sejoursObservableList = FXCollections.observableArrayList();
 
 	public void getAllSejours() throws IOException {
 		String csvFilePath = "src/main/java/com/example/airbnb/views/sejours.csv";
@@ -101,6 +143,13 @@ public class HelloController {
 
 		csvParser.close();
 		reader.close();
+	}
+
+	public void seDeconnecter() throws IOException {
+
+		session.logout();
+		updateHome();
+
 	}
 
 	public void printAllSejours(List<Sejours> list) {
@@ -152,6 +201,18 @@ public class HelloController {
 	}
 
 	public void initialize() throws IOException {
+		updateView();
+
+        Session session = Session.getInstance();
+        if (session.isLoggedIn()) {
+            User currentUser = session.getCurrentUser();
+            System.out.println("il est connecté le boug");
+            // afficher les informations de l'utilisateur
+        } else {
+            System.out.println("il est pas du tout connecté le boug");
+            // rediriger l'utilisateur vers la page de connexion
+        }
+
 
 		// Afficher tous les sejours dans la Hbox qui elle meme est dans un ScrollPane
 		getAllSejours();
@@ -222,11 +283,45 @@ public class HelloController {
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	private void updateView() {
+		if (session != null && session.isLoggedIn()) {
+			// Si l'utilisateur est connecté, on affiche les éléments liés à la connexion
+			connection.setVisible(false);
+			deconnexion.setVisible(true);
+			panierpng.setVisible(true);
+
+		} else {
+			// Si l'utilisateur n'est pas connecté, on affiche les éléments liés à la
+			// déconnexion
+			connection.setVisible(true);
+			deconnexion.setVisible(false);
+			panierpng.setVisible(false);
+
+		}
+	}
+
+	@FXML
+	void panier(MouseEvent event) throws IOException {
+		System.out.println("ouais panier");
+		/*
+		 * 
+		 * Stage newStage = new Stage(); FXMLLoader fxmlLoader = new
+		 * FXMLLoader(HelloApplication.class.getResource("vue/login.fxml")); Scene scene
+		 * = new Scene(fxmlLoader.load(), 320, 240); newStage.setWidth(800); // définir
+		 * la largeur de la fenêtre newStage.setHeight(600); // définir la hauteur de la
+		 * fenêtre newStage.setScene(scene); newStage.show(); Alert alert = new
+		 * Alert(null);
+		 * 
+		 */
+		
+		Stage newStage = new Stage(); 
+		  FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vue/Hote_vue.fxml")); 
+		  Scene scene= new Scene(fxmlLoader.load(), 320, 240); 
+		  newStage.setWidth(800); // définir
+		  newStage.setHeight(600); // définir la hauteur de la
+		  newStage.setScene(scene); newStage.show(); 
+		  Alert alert = new Alert(null);
+	}
+
 }

@@ -88,7 +88,35 @@ public class HoteController {
 					public void handle(ActionEvent event) {
 						// Action à faire lors de la suppression d'une réservation
 						Reservation reservation = getTableView().getItems().get(getIndex());
-						System.out.println("Delete clicked for reservation: " + reservation.getDatedebut());
+						System.out.println("Accept clicked for reservation: " + reservation.getDatedebut());
+
+						String csvFile = "src/main/java/com/example/airbnb/data/Reservation.csv";
+						String line = "";
+						String csvSplitBy = ",";
+						int columnToModify = 7;
+						// index of column to modify (0-based)7
+						String idResToModify = reservation.getVille();
+						String newColumnValue = "Refusé";
+						try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+							StringBuilder sb = new StringBuilder();
+
+							while ((line = br.readLine()) != null) {
+								String[] data = line.split(csvSplitBy);
+
+								if (data[0].equals(idResToModify)) {
+									data[columnToModify] = newColumnValue;
+
+								}
+								sb.append(String.join(",", data));
+								sb.append(System.lineSeparator());
+							}
+
+							BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile));
+							writer.write(sb.toString());
+							writer.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 
 					}
 
@@ -151,7 +179,6 @@ public class HoteController {
 				String datedebut = record.get(5);
 				String datefin = record.get(6);
 				String status = record.get(7);
-
 				studentsTable.getItems()
 						.add(new Reservation(ville, prix, sejour, hote, nbPassagers, datedebut, datefin, status));
 			}

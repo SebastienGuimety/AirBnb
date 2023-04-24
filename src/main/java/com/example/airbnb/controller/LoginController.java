@@ -1,52 +1,4 @@
-
-
-	/*public void connexion() throws IOException {
-
-		System.out.println(" je suis dans connexion!!");
-		String csvFilePath = "src/main/java/com/example/airbnb/data/user.csv";
-		String currentPath = Paths.get("").toAbsolutePath().toString();
-		FileReader reader = new FileReader(csvFilePath);
-		CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
-		boolean trouve = false;
-		for (CSVRecord record : csvParser) {
-
-			// Récupérer les valeurs de chaque colonne en utilisant leur index
-			String nom = record.get(0);
-			String prenom = record.get(1);
-			String login_file = record.get(2);
-			String password_file = record.get(3);
-			String role = record.get(4);
-			System.out.println("file login is " + login_file);
-			if (login_file.equals(login.getText())) {
-				trouve = true;
-				if (password_file.equals(password.getText())) {
-					
-					
-					erreur.setText("User trouvé");
-					Stage newStage = new Stage();
-					FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vue/Hote_vue.fxml"));
-					Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-					newStage.setWidth(800); // définir la largeur de la fenêtre
-					newStage.setHeight(600); // définir la hauteur de la fenêtre
-					newStage.setScene(scene);
-					newStage.show();
-					Alert alert = new Alert(null);
-					
-				} else {
-					erreur.setText("Mot de passe incorrect!!");
-				}
-
-			}
-
-		}
-		if (!trouve)
-			erreur.setText("Cet utilisateur n'esxiste pas ");
-
-		csvParser.close();
-		reader.close();
-	}*/
-	 
-package com.example.airbnb.vue;
+package com.example.airbnb.controller;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -63,7 +15,6 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import com.example.airbnb.HelloApplication;
-import com.example.airbnb.controller.HelloController;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.fxml.FXML;
@@ -97,7 +48,7 @@ public class LoginController {
     public void connexion(ActionEvent e) throws IOException, InterruptedException {
 
         System.out.println(" je suis dans connexion!!");
-        String csvFilePath = "src/main/java/com/example/airbnb/data/user.csv";
+        String csvFilePath = "src/main/java/com/example/airbnb/views/user.csv";
         String currentPath = Paths.get("").toAbsolutePath().toString();
         FileReader reader = new FileReader(csvFilePath);
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
