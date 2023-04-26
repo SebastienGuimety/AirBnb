@@ -59,6 +59,7 @@ public class LoginController {
             String prenom = record.get(2);
             String login_file = record.get(3);
             String password_file = record.get(4);
+            String role = record.get(5);
 
 
             System.out.println("file login is " + login_file);
@@ -71,6 +72,7 @@ public class LoginController {
                     user.setNom(nom);
                     user.setPrenom(prenom);
                     user.setId(id);
+                    user.setRole(role);
                     Session.getInstance().login(user);
 
                     //Thread.sleep(5000);

@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -30,13 +31,21 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.jfoenix.controls.*;
 
 public class HelloController {
 
+    double x,y;
     @FXML
-    private HBox hboxcentre;
+    private HBox hboxcentre,hboxcentre1;
+
+    @FXML
+    private Label labelhote;
+
+    @FXML
+    private ScrollPane schote;
     @FXML
     private TableView<Sejours> tableView;
 
@@ -80,6 +89,7 @@ public class HelloController {
 
     List<Sejours> sejours = new ArrayList<>();
     ObservableList<Sejours> sejoursObservableList = FXCollections.observableArrayList();
+    ObservableList<Sejours> sejoursObservableListHote = FXCollections.observableArrayList();
 
     public void updateHome() throws IOException {
         // créer une nouvelle instance du contrôleur de la page home
@@ -129,18 +139,47 @@ public class HelloController {
 
 
     public void getAllSejours() throws IOException {
-        String csvFilePath = "src/main/java/com/example/airbnb/views/sejours.csv";
+        String csvFilePath = "src/main/java/com/example/airbnb/views/sejours_aleatoires.csv";
         String currentPath = Paths.get("").toAbsolutePath().toString();
         FileReader reader = new FileReader(csvFilePath);
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
 
         for(CSVRecord record : csvParser) {
 
-            // Récupérer les valeurs de chaque colonne en utilisant leur index
+            if( !record.get(0).equals("Ville")){
+                // Récupérer les valeurs de chaque colonne en utilisant leur index
 
-            Sejours sej = new Sejours(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5), record.get(6), record.get(7), record.get(8),record.get(9), record.get(10) );
-            //Label label = new Label(record.get(0) + " "+ record.get(1) + " "+5+ " "+record.get(3)+ " "+record.get(4)+" "+ 87);
-            sejoursObservableList.add(sej);
+                Sejours sej = new Sejours(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5), record.get(6), record.get(7), record.get(8),record.get(9), record.get(10) );
+                //Label label = new Label(record.get(0) + " "+ record.get(1) + " "+5+ " "+record.get(3)+ " "+record.get(4)+" "+ 87);
+                sejoursObservableList.add(sej);
+            }
+        }
+
+        csvParser.close();
+        reader.close();
+    }
+
+
+    public void getAllSejoursHote() throws IOException {
+        Session session = Session.getInstance();
+        User currentUser = session.getCurrentUser();
+
+
+        String csvFilePath = "src/main/java/com/example/airbnb/views/sejours_aleatoires.csv";
+        String currentPath = Paths.get("").toAbsolutePath().toString();
+        FileReader reader = new FileReader(csvFilePath);
+        CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
+
+        for(CSVRecord record : csvParser) {
+
+            if(record.get(3).equals(currentUser.getId())){
+                // Récupérer les valeurs de chaque colonne en utilisant leur index
+
+                Sejours sej = new Sejours(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4), record.get(5), record.get(6), record.get(7), record.get(8),record.get(9), record.get(10) );
+                //Label label = new Label(record.get(0) + " "+ record.get(1) + " "+5+ " "+record.get(3)+ " "+record.get(4)+" "+ 87);
+                sejoursObservableListHote.add(sej);
+            }
+
 
         }
 
@@ -148,7 +187,7 @@ public class HelloController {
         reader.close();
     }
 
-    public void printAllSejours(List<Sejours> list ){
+    public void printAllSejours(List<Sejours> list){
         for (Sejours sejour : list) {
             // Create a VBox to hold the flight details
 
@@ -233,6 +272,49 @@ public class HelloController {
         }
     }
 
+    public void printAllSejoursHote(List<Sejours> list){
+        for (Sejours sejour : list) {
+            // Create a VBox to hold the flight details
+
+            HBox hboxville = new HBox( new Label("Ville : " + sejour.getVille()));
+            HBox hboxpays = new HBox(new Label("Pays : " + sejour.getPays()));
+            HBox hboxprix = new HBox(new Label("Prix : " + sejour.getPrix()));
+            HBox hboxnb = new HBox(new Label("Nombres de passagers max : " + sejour.getNbPassagers()));
+            HBox hboxhote = new HBox(new Label("Hote : " + sejour.getNomHote()));
+            //HBox hboxavis = new HBox(new Label("avis : " + flight.getAvis()));
+
+            VBox vboxDetails = new VBox();
+            Insets padding = new Insets(50, 0, 0, 0);
+            vboxDetails.setPadding(padding);
+
+            // Add each HBox to the VBox
+            vboxDetails.getChildren().addAll(hboxville,hboxpays,hboxprix,hboxnb,hboxhote);
+            vboxDetails.setUserData(sejour);
+            vboxDetails.setSpacing(10);
+            vboxDetails.setMinWidth(300);
+
+            hboxcentre1.getChildren().add(vboxDetails);
+            hboxcentre1.setAlignment( Pos.CENTER);
+
+            for (Node child : hboxcentre1.getChildren()) {
+                if (child instanceof VBox vbox) {
+                    vbox.getStyleClass().add("vbox-frame");
+                    vbox.setOnMouseClicked(event -> {
+
+                        // seulement pour avoir un css pour un clic sur un sejours
+                        if (event.getButton() == MouseButton.PRIMARY) {
+                            for (Node v : hboxcentre1.getChildren()) {
+                                v.getStyleClass().remove("selected");
+                            }
+                            vbox.getStyleClass().add("selected");
+                        }
+
+                    });
+                }
+            }
+        }
+    }
+
     public void initialize() throws IOException {
 
         updateView();
@@ -241,10 +323,24 @@ public class HelloController {
         if (session.isLoggedIn()) {
             User currentUser = session.getCurrentUser();
             System.out.println("il est connecté le boug");
+
+
+            if( currentUser.getRole().equals("hote")){
+                getAllSejoursHote();
+                printAllSejoursHote(sejoursObservableListHote);
+                labelhote.setText("Liste de vos sejours");
+            } else {
+                hboxcentre1.setVisible(false);
+                schote.setVisible(false);
+            }
+
+
             // afficher les informations de l'utilisateur
         } else {
             System.out.println("il est pas du tout connecté le boug");
             // rediriger l'utilisateur vers la page de connexion
+            hboxcentre1.setVisible(false);
+            schote.setVisible(false);
         }
 
 
@@ -328,6 +424,7 @@ public class HelloController {
             connection.setVisible(false);
             deconnexion.setVisible(true);
 
+
         } else {
             // Si l'utilisateur n'est pas connecté, on affiche les éléments liés à la déconnexion
             connection.setVisible(true);
@@ -338,23 +435,89 @@ public class HelloController {
 
     @FXML
     void panier(MouseEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("panier.fxml"));
-        //Parent loginRoot = fxmlLoader.load();
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
-        // Récupérer le contrôleur de la page Login
-        //LoginController loginController = fxmlLoader.getController();
+        Session session = Session.getInstance();
+        User currentUser = session.getCurrentUser();
 
-        // Passer la référence au contrôleur de la page Home
-        //loginController.setHomeController(this);
+        if(currentUser == null){
+            Stage newStage = new Stage();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("panier.fxml")));
+
+            //Parent loginRoot = fxmlLoader.load();
+            newStage.setScene(new Scene(root));
+            // set stage borderless
+            newStage.initStyle(StageStyle.UNDECORATED);
+
+            // drag it here
+
+            root.setOnMousePressed(evente -> {
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+            root.setOnMouseDragged(evente -> {
+
+                newStage.setX(event.getScreenX() - x);
+                newStage.setY(event.getScreenY() - y);
+
+            });
+            newStage.show();
+        }
+
+        assert currentUser != null;
+        if(currentUser.getRole().equals("hote")){
+            Stage newStage = new Stage();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("Home.fxml")));
+
+            //Parent loginRoot = fxmlLoader.load();
+            newStage.setScene(new Scene(root));
+            // set stage borderless
+            newStage.initStyle(StageStyle.UNDECORATED);
+
+            // drag it here
+
+            root.setOnMousePressed(evente -> {
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+            root.setOnMouseDragged(evente -> {
+
+                newStage.setX(event.getScreenX() - x);
+                newStage.setY(event.getScreenY() - y);
+
+            });
+            newStage.show();
+            final Node source = (Node) event.getSource();
+
+            final Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();
+
+        } else {
+            Stage newStage = new Stage();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("panier.fxml")));
+
+            //Parent loginRoot = fxmlLoader.load();
+            newStage.setScene(new Scene(root));
+            // set stage borderless
+            newStage.initStyle(StageStyle.UNDECORATED);
+
+            // drag it here
+
+            root.setOnMousePressed(evente -> {
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+            root.setOnMouseDragged(evente -> {
+
+                newStage.setX(event.getScreenX() - x);
+                newStage.setY(event.getScreenY() - y);
+
+            });
+            newStage.show();
 
 
-        Stage newStage = new Stage();
-        newStage.setWidth(650); // définir la largeur de la fenêtre
-        newStage.setHeight(530); // définir la hauteur de la fenêtre
-        newStage.setScene(scene);
-        //newStage.setMaximized(true);
-        newStage.show();
-        Alert alert = new Alert(null);
+        }
+
+
+
     }
 }

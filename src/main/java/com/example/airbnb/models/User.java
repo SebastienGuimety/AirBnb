@@ -10,7 +10,9 @@ public class User {
     String login;
     String password;
     String id;
-
+    String role;
+    public String getRole() {return role;}
+    public void setRole(String role) {this.role = role;}
     public String getNom() {
         return nom;
     }

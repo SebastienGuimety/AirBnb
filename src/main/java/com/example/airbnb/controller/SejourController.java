@@ -177,7 +177,7 @@ public class SejourController   {
                 printer.close();
                 writer.close();
 
-                erreur.setText("Votre demande de sejour est bien envoyé à l'hote");
+                erreur.setText("Votre demande de sejour viens d'être ajouté dans votre panier");
             }
 
         } else {
