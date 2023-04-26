@@ -34,6 +34,8 @@ import org.apache.commons.csv.CSVRecord;
 
 import com.example.airbnb.HelloApplication;
 import com.example.airbnb.models.Reservation;
+import com.example.airbnb.models.Session;
+import com.example.airbnb.models.User;
 
 public class TestController implements Initializable {
 
@@ -142,6 +144,11 @@ public class TestController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		Session session = Session.getInstance();
+		User currentUser = session.getCurrentUser();
+		System.out.println("**********le nom de l'utilisteur est*****:  "+currentUser.getId());
+		
 		Node[] nodes = new Node[10];
 
 		String csvFilePath = "src/main/java/com/example/airbnb/data/Reservation.csv";
@@ -175,6 +182,8 @@ public class TestController implements Initializable {
 				String datefin = record.get(7);
 				String status = record.get(8);
 				String id = record.get(9);
+				
+				System.out.println("*********hote de l'utilisteur est*****:  "+hote);
 				final int j = i;
 
 				try {
@@ -194,7 +203,7 @@ public class TestController implements Initializable {
 				nb_personne.setText(nbPassagers);
 				Button ok = (Button) nodes[i].lookup("#ok");
 				Button non = (Button) nodes[i].lookup("#non");
-				if (!status.equals("Accepté") && !status.equals("Refusé")) {
+				if ( hote.equals(currentUser.getId())&& !status.equals("Accepté") && !status.equals("Refusé")) {
 
 					ok.setOnAction(e -> {
 						System.out.println("renitialisation");

@@ -29,6 +29,12 @@ public class Session {
     public User getCurrentUser() {
         return currentUser;
     }
+    public boolean isHote(User user) {
+    	if(user.role.equals("hote")) {
+    		return true;
+    	}
+    	return false;
+    }
 }
 
 

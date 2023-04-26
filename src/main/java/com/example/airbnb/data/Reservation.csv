@@ -1,8 +1,8 @@
 Ville,Pays,Prix,Hote,Client,nbPassagers,datedebut,datefin,status,id
-Barcelone,Espagne,200,Lucas,Seb,5,12/07/2023,15/07/2023,Accepté,1
-Barcelone,Espagne,100,3,Anas,5,04/10/2023,10/10/2023,Refusé,2
-Paris,France,600,2,Saad,10,04/06/2023,10/06/2023,Accepté,3
-Barcelone,Espagne,100,1,Wadii,5,19/10/2023,25/10/2023,attente,4
+Barcelone,Espagne,300,200,Seb,5,12/07/2023,15/07/2023,attente,1
+Barcelone,Espagne,100,3,200,5,04/10/2023,10/10/2023,Refusé,2
+Paris,France,600,2,Saad,10,04/06/2023,10/06/2023,attente,3
+Barcelone,Espagne,200,200,Wadii,5,19/10/2023,25/10/2023,attente,4
 Seveille,Espagne,200,Lucas,Seb,5,12/10/2023,18/10/2023,Accepté,1
 Marseille,France,200,Lucas,Seb,5,12/12/2023,15/12/2023,Accepté,1
 Nice,France,200,Lucas,Seb,5,07/08/2023,15/08/2023,Accepté,1

@@ -110,7 +110,7 @@ public class LoginController {
             String prenom = record.get(2);
             String login_file = record.get(3);
             String password_file = record.get(4);
-
+            String role = record.get(5);
 
             System.out.println("file login is " + login_file);
             if (login_file.equals(login.getText())) {
@@ -120,6 +120,7 @@ public class LoginController {
                     erreur.setText("User trouvé");
                     User user = new User();
                     user.setNom(nom);
+                    user.setRole(role);
                     user.setPrenom(prenom);
                     user.setId(id);
                     Session.getInstance().login(user);

@@ -34,7 +34,7 @@ public class HelloApplication extends Application {
 		stage.setScene(scene);
 		stage.setMaximized(true);
 		stage.show();*/
-		 Parent root = FXMLLoader.load(getClass().getResource("vue/Home.fxml"));
+		 Parent root = FXMLLoader.load(getClass().getResource("vue/hello-view.fxml"));
 	        stage.setScene(new Scene(root));
 	        //set stage borderless
 	        stage.initStyle(StageStyle.UNDECORATED);

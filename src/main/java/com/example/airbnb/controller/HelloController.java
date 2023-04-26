@@ -1,4 +1,5 @@
 package com.example.airbnb.controller;
+
 import com.example.airbnb.vue.LoginController;
 
 import com.example.airbnb.HelloApplication;
@@ -24,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -80,8 +82,7 @@ public class HelloController {
 
 	@FXML
 	ImageView panierpng;
-
-	
+	private double x, y;
 
 	public void updateHome() throws IOException {
 		// créer une nouvelle instance du contrôleur de la page home
@@ -101,16 +102,14 @@ public class HelloController {
 	}
 
 	public void seConnecter() throws IOException {
-		
-		
 
 		Stage newStage = new Stage();
 		FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vue/login.fxml"));
 		Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 		LoginController loginController = fxmlLoader.getController();
 
-        // Passer la référence au contrôleur de la page Home
-        loginController.setHomeController(this);
+		// Passer la référence au contrôleur de la page Home
+		loginController.setHomeController(this);
 		newStage.setWidth(350); // définir la largeur de la fenêtre
 		newStage.setHeight(300); // définir la hauteur de la fenêtre
 		newStage.setScene(scene);
@@ -203,16 +202,15 @@ public class HelloController {
 	public void initialize() throws IOException {
 		updateView();
 
-        Session session = Session.getInstance();
-        if (session.isLoggedIn()) {
-            User currentUser = session.getCurrentUser();
-            System.out.println("il est connecté le boug");
-            // afficher les informations de l'utilisateur
-        } else {
-            System.out.println("il est pas du tout connecté le boug");
-            // rediriger l'utilisateur vers la page de connexion
-        }
-
+		Session session = Session.getInstance();
+		if (session.isLoggedIn()) {
+			User currentUser = session.getCurrentUser();
+			System.out.println("il est connecté le boug");
+			// afficher les informations de l'utilisateur
+		} else {
+			System.out.println("il est pas du tout connecté le boug");
+			// rediriger l'utilisateur vers la page de connexion
+		}
 
 		// Afficher tous les sejours dans la Hbox qui elle meme est dans un ScrollPane
 		getAllSejours();
@@ -315,13 +313,43 @@ public class HelloController {
 		 * 
 		 */
 		
-		Stage newStage = new Stage(); 
-		  FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("vue/Hote_vue.fxml")); 
-		  Scene scene= new Scene(fxmlLoader.load(), 320, 240); 
-		  newStage.setWidth(800); // définir
-		  newStage.setHeight(600); // définir la hauteur de la
-		  newStage.setScene(scene); newStage.show(); 
-		  Alert alert = new Alert(null);
+		Session session = Session.getInstance();
+		User currentUser = session.getCurrentUser();
+		if (session.isHote(currentUser)) {
+
+			Stage newStage = new Stage();
+			Parent root = FXMLLoader.load(HelloApplication.class.getResource("vue/Home.fxml"));
+			newStage.setScene(new Scene(root));
+			// set stage borderless
+			newStage.initStyle(StageStyle.UNDECORATED);
+
+			// drag it here
+			root.setOnMousePressed(evente -> {
+				x = event.getSceneX();
+				y = event.getSceneY();
+			});
+			root.setOnMouseDragged(evente -> {
+
+				newStage.setX(event.getScreenX() - x);
+				newStage.setY(event.getScreenY() - y);
+
+			});
+			newStage.show();
+			final Node source = (Node) event.getSource();
+
+			final Stage stage = (Stage) source.getScene().getWindow();
+			stage.close();
+			
+
+		}
+		/*
+		 * else { Stage newStage = new Stage(); FXMLLoader fxmlLoader = new
+		 * FXMLLoader(HelloApplication.class.getResource("vue/Home.fxml")); Scene scene
+		 * = new Scene(fxmlLoader.load(), 320, 240); newStage.setWidth(800); // définir
+		 * newStage.setHeight(600); // définir la hauteur de la
+		 * newStage.setScene(scene); newStage.show(); }
+		 */
+
 	}
 
 }

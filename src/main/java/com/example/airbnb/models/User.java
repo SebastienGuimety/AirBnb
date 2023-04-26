@@ -8,7 +8,14 @@ public class User {
 	String Prenom;
 	String login;
 	String password;
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	String id;
+	String role;
 	
 	public String getId() {
 		return id;
